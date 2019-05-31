@@ -1,30 +1,9 @@
-const http = require('http')
-const comidas = {
+const express = require('express')
+const cors = require('cors')
+const controller = require('./ComidasController')
+//import express from 'express'
 
-    pratosFavoritos: [
-        {
-            "nome": "Batata frita",
-            "descricao": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. ",
-            "imagem": "img/Batata-frita.jpg"
-        },
-        {
-            "nome": "Macarronada",
-            "descricao": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. ",
-            "imagem": "img/macarronada.jpg"
-        },
-        {
-            "nome": "Falafel",
-            "descricao": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. ",
-            "imagem": "img/falafel.jpg"
-        },
-        {
-            "nome": "Creme de abóbora",
-            "descricao": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. ",
-            "imagem": "img/creme-de-abobora.jpg"
-        },
-    ]}
-
-const servidor = http.createServer(function (request, response) {
+/* const servidor = http.createServer(function (request, response) {   servidor feito para aulas sem express
 
         if (request.url === '/') {
             response.end('Hello Word')
@@ -44,8 +23,15 @@ const servidor = http.createServer(function (request, response) {
                 response.end("<h1>respostão diferentona do post</h1>")
             }
         }
-    })
+    }) */
 
+const servidor = express()
+servidor.use(cors())
+
+servidor.get("/comidas", (request, response) => {
+    // response.header('Access-Control-Allow-Origin', '*') //se nao tiver instalado o CORS
+    response.send(controller.getAll())
+})
 
 servidor.listen(3000)//valor da porta. usar portas altas a partir do 3000
 console.log('servidorzinho iniciado com sucesso')    
