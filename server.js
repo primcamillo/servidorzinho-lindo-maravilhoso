@@ -27,15 +27,21 @@ const controller = require('./ComidasController')
 
 const servidor = express()
 servidor.use(cors())
+servidor.use(bodyParser.json())
 
 servidor.get('/comidas', (request, response) => {
     // response.header('Access-Control-Allow-Origin', '*') //se nao tiver instalado o CORS
     response.send(controller.getAll())
 })
 
-servidor.post('/comidas', bodyParser.json(), (request, response) => {
-    controller.add(request.body)
-    response.send(201)
+servidor.post('/comidas', (request, response) => {
+    controller.addPost(request.body)
+    response.sendStatus(201)
+})
+
+servidor.delete('/comidas/:id', (request, response) => {
+    controller.remove(request.params.id) 
+    response.send(204)
 })
 
 servidor.listen(3000)//valor da porta. usar portas altas a partir do 3000
